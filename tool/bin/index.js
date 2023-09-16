@@ -2,8 +2,8 @@
 
 import arg from 'arg';
 import chalk from 'chalk';
-import getConfig from '../config/config-manager.js';
-import start from '../command/start.js';
+import getConfig from '../src/config/config-manager.js';
+import start from '../src/command/start.js';
 
 try {
   const args = arg({
