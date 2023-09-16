@@ -3,7 +3,7 @@ import { cosmiconfigSync } from 'cosmiconfig';
 
 const configLoader = cosmiconfigSync('tool');
 
-module.export = function getConfig() {
+const getConfig = function () {
   const result = configLoader.search(process.cwd());
 
   if (!result) {
@@ -13,3 +13,5 @@ module.export = function getConfig() {
   console.log('Found configuration', result.config);
   return result.config;
 };
+
+export default getConfig;
