@@ -1,25 +1,15 @@
 import chalk from 'chalk';
-import { pkgUpSync } from 'pkg-up';
-import { readFileSync } from 'fs';
+import { cosmiconfigSync } from 'cosmiconfig';
 
-const readPkgCofig = function (pkgPath) {
-  try {
-    const data = readFileSync(pkgPath, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error('Error reading the file:', error.message);
-  }
-};
+const configLoader = cosmiconfigSync('tool');
 
 module.export = function getConfig() {
-  const pkgPath = pkgUpSync({ cwd: process.cwd() });
-  const pkg = readPkgCofig(pkgPath);
+  const result = configLoader.search(process.cwd());
 
-  if (pkg.tool) {
-    console.log('Found configuration', pkg.tool);
-    return pkg.tool;
-  } else {
+  if (!result) {
     console.log(chalk.yellow('Could not find configuration, using default'));
     return { port: 1234 };
   }
+  console.log('Found configuration', result.config);
+  return result.config;
 };
